@@ -22,7 +22,7 @@ export const getShipmentById = async (req, res) => {
 };
 
 export const createShipment = async (req, res) => {
-  // console.log(req.body.currentLocation)
+  console.log(req.body)
   const { shipmentId, containerId, route, currentLocation, eta, status } =
     req.body;
 
@@ -47,7 +47,7 @@ export const createShipment = async (req, res) => {
     if (savedShipment) {
       res
         .status(201)
-        .json({ message: "Shipment created", shipment: savedShipment });
+        .json({  shipment: savedShipment });
     } else {
       res.status(400).json({ message: "Some error while saving" });
     }
