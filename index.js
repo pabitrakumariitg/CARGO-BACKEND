@@ -10,13 +10,14 @@ dotenv.config();
 // Create Express app
 const app = express();
 
+// Connect to MongoDB
+connectDB();
+
 // Comprehensive CORS configuration
 app.use(cors({
-  origin: [
-    'http://localhost:3000', // Local frontend
-    'https://your-frontend-domain.com', // Production frontend
-    '*' // Open for Postman and other clients during development
-  ],
+  origin: process.env.NODE_ENV === 'production'
+    ? [process.env.FRONTEND_URL || 'https://your-frontend-domain.com']
+    : ['http://localhost:3000', '*'],
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
   allowedHeaders: ['Content-Type', 'Authorization'],
   credentials: true
@@ -50,14 +51,11 @@ app.use((err, req, res, next) => {
   });
 });
 
+// Start the server (works for both production and development)
+const PORT = process.env.PORT || 5000;
+app.listen(PORT, () => {
+  console.log(`Server started at PORT: ${PORT}`);
+});
+
 // Export for Vercel
 export default app;
-
-// Local server startup (only for local development)
-const PORT = process.env.PORT || 5000;
-if (process.env.NODE_ENV !== 'production') {
-  app.listen(PORT, () => {
-    console.log(`Server started at PORT: ${PORT}`);
-    connectDB();
-  });
-}
