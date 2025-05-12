@@ -7,61 +7,17 @@ dotenv.config();
 
 const app = express();
 const PORT=process.env.PORT
-
-// CORS configuration - must be before routes
 app.use(cors({
-  origin: "https://cargo-webapp.vercel.app",  // Remove trailing slash
-  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'], // Add allowed methods
-  allowedHeaders: ['Content-Type', 'Authorization'],    // Add allowed headers
-  credentials: true
+  origin: "https://cargo-webapp.vercel.app/", 
+  credentials: true            
 }));
-
-// Middleware
 app.use(express.json());
-
-// Handle favicon.ico requests
-app.get('/favicon.ico', (req, res) => {
-  res.status(204).end(); // No content response
-});
-
-// Test route to verify CORS
-app.get("/test", (req, res) => {
-  res.json({ message: "CORS is working" });
-});
-
-// Routes
 app.use("/api", shipmentRoutes);
-
-// Handle 404 errors - must be after routes
-app.use((req, res) => {
-  res.status(404).json({
-    status: 'error',
-    message: 'Route not found'
-  });
-});
-
-// Error handling middleware - must be last
-app.use((err, req, res, next) => {
-  // Log the error for debugging
-  console.error('Error:', err.message);
-  console.error('Stack:', err.stack);
-
-  // Send appropriate error response
-  res.status(err.status || 500).json({
-    status: 'error',
-    message: err.message || 'Internal Server Error',
-    error: process.env.NODE_ENV === 'development' ? {
-      stack: err.stack,
-      details: err.message
-    } : {}
-  });
-});
-
-// Start server
+app.get("/",(req,res)=>{
+    res.send("Hello World")
+})
 app.listen(PORT,()=>{
     console.log("Server started at PORT:",PORT)
     connectDB()
 })
 
-// Export for Vercel
-export default app;
