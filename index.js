@@ -8,7 +8,7 @@ dotenv.config();
 const app = express();
 const PORT=process.env.PORT
 app.use(cors({
-  origin: "http://localhost:5173", 
+  origin: "https://cargo-webapp.vercel.app/", 
   credentials: true            
 }));
 app.use(express.json());
