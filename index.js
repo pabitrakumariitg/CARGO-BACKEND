@@ -19,6 +19,11 @@ app.use(cors({
 // Middleware
 app.use(express.json());
 
+// Handle favicon.ico requests
+app.get('/favicon.ico', (req, res) => {
+  res.status(204).end(); // No content response
+});
+
 // Test route to verify CORS
 app.get("/test", (req, res) => {
   res.json({ message: "CORS is working" });
@@ -37,11 +42,18 @@ app.use((req, res) => {
 
 // Error handling middleware - must be last
 app.use((err, req, res, next) => {
-  console.error(err.stack);
-  res.status(500).json({
+  // Log the error for debugging
+  console.error('Error:', err.message);
+  console.error('Stack:', err.stack);
+
+  // Send appropriate error response
+  res.status(err.status || 500).json({
     status: 'error',
-    message: 'Internal Server Error',
-    error: process.env.NODE_ENV === 'development' ? err.message : {}
+    message: err.message || 'Internal Server Error',
+    error: process.env.NODE_ENV === 'development' ? {
+      stack: err.stack,
+      details: err.message
+    } : {}
   });
 });
 
