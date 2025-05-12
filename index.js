@@ -8,14 +8,11 @@ dotenv.config();
 const app = express();
 const PORT=8000
 app.use(cors({
-  origin: "https://cargo-webapp.vercel.app/", 
+  origin: "https://cargo-webapp.vercel.app", 
   credentials: true            
 }));
 app.use(express.json());
 app.use("/api", shipmentRoutes);
-app.get("/",(req,res)=>{
-    res.send("Hello World")
-})
 app.listen(PORT,()=>{
     console.log("Server started at PORT:",PORT)
     connectDB()
