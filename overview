@@ -1,0 +1,12 @@
+cargo-tracker-backend/
+├── models/
+│   └── Shipment.js
+├── routes/
+│   └── shipments.js
+├── controllers/
+│   └── shipmentController.js
+├── .env
+├── server.js
+└── package.json
+
+
