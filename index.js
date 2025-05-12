@@ -6,7 +6,7 @@ import shipmentRoutes from "./routes/shipment.routes.js"
 dotenv.config();
 
 const app = express();
-const PORT=process.env.PORT
+const PORT=8000
 app.use(cors({
   origin: "https://cargo-webapp.vercel.app/", 
   credentials: true            

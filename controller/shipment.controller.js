@@ -1,4 +1,4 @@
-import Shipment from "../../models/Shipment.model.js";
+import Shipment from "../models/Shipment.model.js";
 
 export const getAllShipments = async (req, res) => {
   try {
