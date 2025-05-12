@@ -1,22 +1,21 @@
+// index.js
 import express from "express";
-import connectDB from "./config/db.config.js"
 import dotenv from "dotenv";
 import cors from "cors";
-import shipmentRoutes from "./routes/shipment.routes.js"
+import connectDB from "./config/db.config.js";
+import shipmentRoutes from "./routes/shipments.js";
+
 dotenv.config();
+await connectDB();  // connect to MongoDB
 
 const app = express();
-const PORT=process.env.PORT
+
 app.use(cors({
-  origin: "http://localhost:5173", // your frontend URL
-  credentials: true               // allow credentials
+  origin: "*",        // allow Postman, frontend, etc.
+  credentials: true
 }));
+
 app.use(express.json());
 app.use("/api", shipmentRoutes);
 
-app.listen(PORT,()=>{
-    console.log("Server started at PORT:",PORT)
-    connectDB()
-})
-
-
+export default app;   // no app.listen()

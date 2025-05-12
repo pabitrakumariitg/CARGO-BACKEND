@@ -6,7 +6,7 @@ import {
   createShipment,
   updateShipmentLocation,
   getShipmentETA,
-} from "../controller/shipment.controller.js";
+} from "../config/controller/shipment.controller.js";
 router.get("/shipments", getAllShipments);
 router.get("/shipment/:id", getShipmentById);
 router.post("/shipment", createShipment);
